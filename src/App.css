@@ -1,0 +1,20 @@
+
+ql-remote-cursor {
+  position: absolute;
+  height: 1.5em;
+  border-left: 2px solid;
+}
+
+.ql-remote-cursor > span {
+  position: absolute;
+  top: -1.5em;
+  left: -2px;
+  padding: 2px 4px;
+  color: white;
+  font-weight: bold;
+  font-size: 10px;
+  white-space: nowrap;
+  user-select: none;
+  background-color: inherit;
+  border-radius: 3px;
+}
