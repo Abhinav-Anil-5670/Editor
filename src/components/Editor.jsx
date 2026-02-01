@@ -1,10 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Navbar from './Navbar';
 import Quill from 'quill';
 import * as Y from 'yjs';
 import { QuillBinding } from 'y-quill';
 import { WebrtcProvider } from 'y-webrtc';
+import QuillCursors from 'quill-cursors';
 
 import 'quill/dist/quill.snow.css';
+
+Quill.register('modules/cursors', QuillCursors);
 
 const USER_COLORS = [
   '#009e84', '#e30044', '#00e366', '#d4e300', 
@@ -19,12 +23,13 @@ const Editor = ({ room, userName, onLeave }) => {
   useEffect(() => {
     console.log("Connecting to peers");
     const ydoc = new Y.Doc();
-    const provider = new WebrtcProvider(room, ydoc, { 
+    const provider = new WebrtcProvider(room, ydoc, {
       signaling: ['wss://y-webrtc-signalling-server-qd66.onrender.com'] 
     });
 
     const quill = new Quill(editorRef.current, {
       modules: {
+        cursors: true,
         toolbar: [
           [{ header: [1, 2, false] }],
           ['bold', 'italic', 'underline'],
@@ -72,13 +77,9 @@ const Editor = ({ room, userName, onLeave }) => {
   }, [room, userName]);
 
   return (
-    <div style={{ padding: '20px', maxWidth: '1100px', margin: '0 auto' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2>Room: <span style={{ color: '#e30041' }}>{room}</span></h2>
-        <button onClick={onLeave} style={{ padding: '8px 16px', cursor: 'pointer', borderRadius: '4px', border: '1px solid #ccc' }}>
-          Leave Room
-        </button>
-      </div>
+    <>
+    <Navbar room={room} onLeave={onLeave}/>
+    <div style={{ padding: '20px' , margin: '0 auto' }}>
 
       <div style={{ display: 'flex', gap: '20px', marginTop: '10px' }}>
         {/* Editor Area */}
@@ -121,6 +122,7 @@ const Editor = ({ room, userName, onLeave }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
