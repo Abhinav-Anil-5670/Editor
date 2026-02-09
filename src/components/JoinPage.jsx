@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { ArrowRight, User, Hash } from 'lucide-react';
+import './JoinPage.css'; // Import the CSS file
 
 const JoinPage = ({ onJoin }) => {
+  // --- STRICT LOGIC PRESERVATION START ---
   const [roomInput, setRoomInput] = useState('');
   const [userInput, setUserInput] = useState('');
 
@@ -10,33 +13,58 @@ const JoinPage = ({ onJoin }) => {
       onJoin(roomInput.trim(), userInput.trim());
     }
   };
+  // --- STRICT LOGIC PRESERVATION END ---
 
   return (
-    <div style={{ 
-      display: 'flex', flexDirection: 'column', alignItems: 'center', 
-      justifyContent: 'center', height: '100vh', backgroundColor: '#f0f2f5' 
-    }}>
-      <div style={{ padding: '40px', background: 'white', borderRadius: '12px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
-        {/* <h1>Enter your Room Name</h1> */}
-        <p>Enter a room name to join a session</p>
-        <form onSubmit={handleSubmit} style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
-            <input
-                type='text'
-                placeholder="Your Name"
-                style={{ padding: '10px', fontSize: '16px', borderRadius: '4px', border: '1px solid #ccc' }}
-                value={userInput} 
-                onChange={e => setUserInput(e.target.value)} 
-            />
-            <input 
-                type="text" 
-                value={roomInput}
-                onChange={(e) => setRoomInput(e.target.value)}
-                placeholder="Room Name"
-                style={{ padding: '10px', fontSize: '16px', borderRadius: '4px', border: '1px solid #ccc' }}
-            />
-          <button type="submit" style={{ padding: '10px 20px', marginLeft: '10px', background: '#e30041', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-            Join
-          </button>
+    <div className="join-container">
+      <div className="join-card">
+        
+        {/* Header Section */}
+        <div className="header-section">
+            <h1 className="title">Join Session</h1>
+            <p className="subtitle">Enter your details to enter the room.</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="join-form">
+            
+            {/* User Input Group */}
+            <div className="input-group">
+                <label className="input-label">Display Name</label>
+                <div style={{position: 'relative'}}>
+                    <input
+                        className="input-field"
+                        type='text'
+                        placeholder="e.g. Alice Smith"
+                        value={userInput} 
+                        onChange={e => setUserInput(e.target.value)} 
+                        style={{ paddingLeft: '44px' }} // Space for icon
+                    />
+                    <User size={18} color="#9ca3af" style={{position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)'}} />
+                </div>
+            </div>
+
+            {/* Room Input Group */}
+            <div className="input-group">
+                <label className="input-label">Room ID</label>
+                <div style={{position: 'relative'}}>
+                    <input 
+                        className="input-field"
+                        type="text" 
+                        value={roomInput}
+                        onChange={(e) => setRoomInput(e.target.value)}
+                        placeholder="e.g. daily-standup"
+                        style={{ paddingLeft: '44px' }} // Space for icon
+                    />
+                    <Hash size={18} color="#9ca3af" style={{position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)'}} />
+                </div>
+            </div>
+
+            {/* Action Button */}
+            <button type="submit" className="join-btn">
+                <span>Join Room</span>
+                <ArrowRight size={18} style={{ marginLeft: '8px', verticalAlign: 'middle', display: 'inline-block' }}/>
+            </button>
+
         </form>
       </div>
     </div>

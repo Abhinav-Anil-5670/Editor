@@ -1,4 +1,16 @@
 /* Styling for y-quill remote cursors */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#root {
+  min-height: 100vh;
+}
+
 .ql-remote-cursor {
   position: absolute;
   height: 1.5em;
