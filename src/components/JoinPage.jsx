@@ -21,23 +21,23 @@ const JoinPage = ({ onJoin }) => {
         
         {/* Header Section */}
         <div className="header-section">
-            <h1 className="title">Join Session</h1>
-            <p className="subtitle">Enter your details to enter the room.</p>
+            <h1 className="title">Join a Room</h1>
+
         </div>
 
         <form onSubmit={handleSubmit} className="join-form">
             
             {/* User Input Group */}
             <div className="input-group">
-                <label className="input-label">Display Name</label>
+                <label className="input-label">Username</label>
                 <div style={{position: 'relative'}}>
                     <input
                         className="input-field"
                         type='text'
-                        placeholder="e.g. Alice Smith"
+                        placeholder=""
                         value={userInput} 
                         onChange={e => setUserInput(e.target.value)} 
-                        style={{ paddingLeft: '44px' }} // Space for icon
+                        style={{ paddingLeft: '44px' }}
                     />
                     <User size={18} color="#9ca3af" style={{position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)'}} />
                 </div>
@@ -45,15 +45,15 @@ const JoinPage = ({ onJoin }) => {
 
             {/* Room Input Group */}
             <div className="input-group">
-                <label className="input-label">Room ID</label>
+                <label className="input-label">Room code</label>
                 <div style={{position: 'relative'}}>
                     <input 
                         className="input-field"
                         type="text" 
                         value={roomInput}
                         onChange={(e) => setRoomInput(e.target.value)}
-                        placeholder="e.g. daily-standup"
-                        style={{ paddingLeft: '44px' }} // Space for icon
+                        placeholder=""
+                        style={{ paddingLeft: '44px' }}
                     />
                     <Hash size={18} color="#9ca3af" style={{position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)'}} />
                 </div>
