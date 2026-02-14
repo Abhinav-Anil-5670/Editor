@@ -5,6 +5,7 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
+  background-color: #f3f3f3;
 }
 
 #root {
@@ -25,4 +26,46 @@ html, body {
   border-left: 2px solid;
 }
 
-/* NAVBAR STUFF */
+.main-content{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 3em;
+}
+
+/* The "Paper" sheet */
+.quill-wrapper {
+  background-color: white;
+  width: 8.5in; /* Standard Letter size width */
+  min-height: 11in; /* Standard Letter size height */
+  /* padding: 1in; Standard Word margins */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  border: 1px solid #ddd;
+}
+
+/* Remove Quill's default borders to make it look seamless on the paper */
+.ql-container.ql-snow {
+  height: 100%;
+  border: none !important;
+  font-family: 'Calibri', 'Arial', sans-serif;
+  font-size: 11pt;
+  display: flex;
+  flex-direction: column;
+}
+
+.ql-editor{
+  flex-grow: 1;
+  min-height: 11in; 
+  cursor: text;
+}
+
+.ql-toolbar.ql-snow {
+  border: none !important;
+  border-bottom: 1px solid #ebebeb !important;
+  background-color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+}

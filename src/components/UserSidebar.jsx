@@ -5,10 +5,13 @@ const UserSidebar = ({ users }) => {
     <div style={{ 
       width: '200px', 
       padding: '15px', 
-      background: '#f8f9fa', 
+      background: '#f8f9fa',
+      position: 'sticky',
+      top: '110px',
       borderRadius: '8px', 
       border: '1px solid #ddd',
-      height: 'fit-content'
+      minHeight: '650px',
+      height: 'fit-content',
     }}>
       <h4 style={{ marginTop: 0 }}>Online ({users.length})</h4>
       <ul style={{ listStyle: 'none', padding: 0 }}>
@@ -27,7 +30,7 @@ const UserSidebar = ({ users }) => {
               borderRadius: '50%', 
               marginRight: '10px',
               display: 'inline-block',
-              border: '1px solid rgba(0,0,0,0.1)'
+              border: '1px solid rgba(0,0,0,0.1)',
             }}></span>
             {user.name}
           </li>

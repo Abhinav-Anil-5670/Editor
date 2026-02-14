@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from './Navbar';
-import UserSidebar from './UserSidebar'; // 1. Import the new module
+import UserSidebar from './UserSidebar';
+import CommentBox from './CommentBox';
 import Quill from 'quill';
 import * as Y from 'yjs';
 import { QuillBinding } from 'y-quill';
@@ -20,7 +21,9 @@ const USER_COLORS = [
 
 const Editor = ({ room, userName, onLeave }) => {
   const editorRef = useRef(null);
+  const toolbarRef = useRef(null);
   const [users, setUsers] = useState([]);
+
 
   useEffect(() => {
     console.log("Connecting to peers");
@@ -81,16 +84,15 @@ const Editor = ({ room, userName, onLeave }) => {
   return (
     <>
       <Navbar room={room} onLeave={onLeave}/>
-      <div style={{ padding: '20px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', gap: '20px', marginTop: '10px' }}>
-          
-          <div style={{ flex: 1 }}>
-            <div ref={editorRef} style={{ height: '500px', background: 'white' }}></div>
-          </div>
+      <div className="main-content">
+        <UserSidebar users={users} />
+        {/* <div className="editor-container"> */}
+            <div className="quill-wrapper">
+              <div ref={editorRef}></div>
+            </div>
+        {/* </div> */}
+        <CommentBox />
 
-          <UserSidebar users={users} />
-          
-        </div>
       </div>
     </>
   );
