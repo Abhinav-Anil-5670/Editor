@@ -1,31 +1,119 @@
-  nav{
-    display: flex;
-    position: sticky;
-    top: 0;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    height: 60px;
-    background-color: #2c3e50;
-    color: #ecf0f1;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    z-index: 99;
-  }
+/* Navbar Container */
+.navbar-container {
+  display: flex;
+  position: sticky;
+  top: 0;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 32px;
+  height: 64px;
+  /* Glassmorphism Effect */
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  /* Subtle bottom border */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
 
-  .roomText{
-    font-size: 1.1rem;
-  }
-  .roomName{
-    color: #e30041;
-  }
+/* Room Info Section (Left) */
+.roomInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-  .leaveButton {
-    padding: 8px 16px;
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.2s;
+.roomText {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280; /* Muted gray */
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.roomName {
+  color: #111827; /* Near black */
+  font-weight: 600;
+  background: #f3f4f6;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  letter-spacing: -0.01em;
+}
+
+/* Actions Section (Right) */
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.leaveButton {
+  padding: 8px 16px;
+  background-color: transparent;
+  color: #ef4444; /* Soft red */
+  border: 1px solid #fee2e2;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.leaveButton:hover {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+  transform: translateY(-1px);
+}
+
+.leaveButton:active {
+  transform: translateY(0px);
+  background-color: #fee2e2;
+}
+
+/* ... existing styles ... */
+
+.size-selector-wrapper {
+  display: flex;
+  align-items: center;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0 10px;
+  margin-right: 16px;
+  transition: all 0.2s ease;
+}
+
+.size-selector-wrapper:focus-within {
+  background: white;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.selector-icon {
+  color: #6b7280;
+  margin-right: 6px;
+}
+
+.size-select {
+  background: transparent;
+  border: none;
+  padding: 8px 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .navbar-container {
+    padding: 0 16px;
   }
+  
+  .roomText {
+    font-size: 13px;
+  }
+}

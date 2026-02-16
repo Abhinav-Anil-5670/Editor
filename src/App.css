@@ -1,71 +1,175 @@
-/* Styling for y-quill remote cursors */
+/* SaaS Color Variables */
+:root {
+  --bg-app: #f9fafb;
+  --bg-paper: #ffffff;
+  --border-subtle: #e5e7eb;
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --accent: #6366f1;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
 
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  background-color: #f3f3f3;
+  background-color: var(--bg-app);
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+  color: var(--text-main);
 }
 
-#root {
-  min-height: 100vh;
+/* The Main 3-Column Grid Layout */
+/* --- Global Grid Layout --- */
+.main-content {
+  display: grid;
+  /* Use 'minmax' to prevent sidebars from crushing, but allow 1fr to shrink */
+  grid-template-columns: minmax(180px, 220px) 1fr minmax(300px, 380px);
+  gap: 2rem; /* Using rem for zoom-friendly spacing */
+  padding: 2rem;
+  max-width: 100%; /* Ensure it never overflows the screen */
+  margin: 0 auto;
+  align-items: start;
+  min-height: calc(100vh - 64px);
+  box-sizing: border-box;
 }
 
-.ql-remote-cursor {
-  position: absolute;
-  height: 1.5em;
-  border-left: 2px solid;
-}
-
-.ql-remote-cursor-caret {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -1px;
-  border-left: 2px solid;
-}
-
-.main-content{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 3em;
-}
-
-/* The "Paper" sheet */
+/* --- Expanded Quill Editor --- */
 .quill-wrapper {
-  background-color: white;
-  width: 8.5in; /* Standard Letter size width */
-  min-height: 11in; /* Standard Letter size height */
-  /* padding: 1in; Standard Word margins */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-  border: 1px solid #ddd;
-}
-
-/* Remove Quill's default borders to make it look seamless on the paper */
-.ql-container.ql-snow {
-  height: 100%;
-  border: none !important;
-  font-family: 'Calibri', 'Arial', sans-serif;
-  font-size: 11pt;
+  background-color: var(--bg-paper);
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden; 
   display: flex;
   flex-direction: column;
+  /* Added: Smooth transition when resizing the document */
+  transition: max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.ql-editor{
-  flex-grow: 1;
-  min-height: 11in; 
-  cursor: text;
+/* NEW: Dynamic Size Variants */
+.size-a4 {
+  max-width: 850px;
+}
+
+.size-a3 {
+  max-width: 1100px;
+}
+
+.size-a5 {
+  max-width: 600px;
+}
+
+.size-wide {
+  max-width: 95%;
+}
+
+.quill-wrapper:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Internal Editor Polishing --- */
+.ql-container.ql-snow {
+  width: 100%;
+  /* CRITICAL: Ensure the container doesn't grow wider than the wrapper */
+  max-width: 100%; 
+  border: none !important;
+}
+
+.ql-editor {
+  padding: 60px 80px !important;
+  line-height: 1.6;
+  font-size: 16px;
+  
+  /* CRITICAL: Force text wrapping and prevent horizontal scrolling */
+  white-space: pre-wrap;       /* Maintains spacing but wraps lines */
+  word-wrap: break-word;      /* Breaks long words if necessary */
+  overflow-x: hidden;         /* Ensures no horizontal scrollbar appears */
+  overflow-y: auto;           /* Allows vertical scrolling for long docs */
+  
+  /* Standard paper height logic */
+  min-height: 1000px;
 }
 
 .ql-toolbar.ql-snow {
   border: none !important;
-  border-bottom: 1px solid #ebebeb !important;
-  background-color: #fff;
+  border-bottom: 1px solid #f3f4f6 !important;
+  background: white;
   position: sticky;
   top: 0;
   z-index: 10;
+  border-radius: 12px 12px 0 0;
   display: flex;
   justify-content: center;
+  padding: 10px !important;
+}
+
+
+/* Quill Toolbar Customization */
+
+
+/* Editor Container */
+
+
+
+
+/* Collaborative Cursors Styling */
+.ql-remote-cursor {
+  transition: all 0.1s ease;
+}
+
+.ql-remote-cursor-caret {
+  width: 2px !important;
+}
+
+/* Tablet & Smaller Laptops (Hide Right Sidebar or Stack) */
+@media (max-width: 1100px) {
+  .main-content {
+    grid-template-columns: 200px 1fr; /* Remove comment column from grid */
+  }
+  
+  /* Push CommentBox to a new row at the bottom */
+  .comment-container {
+    grid-column: 1 / -1; /* Stretch across both remaining columns */
+    width: 100% !important;
+    height: 400px !important; /* Make it shorter when at the bottom */
+  }
+}
+
+/* Mobile Devices (Stack Everything) */
+@media (max-width: 768px) {
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .sidebar-container, 
+  .quill-wrapper, 
+  .comment-container {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  .sidebar-container {
+    order: 2; /* Move users below the editor on mobile */
+  }
+  
+  .quill-wrapper {
+    order: 1; /* Keep editor at top */
+  }
+  
+  .comment-container {
+    order: 3;
+  }
+}
+
+@media (max-width: 600px) {
+  .ql-editor {
+    padding: 20px !important; /* Reduce the huge margins on mobile */
+  }
 }

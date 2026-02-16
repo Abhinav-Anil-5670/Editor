@@ -11,26 +11,34 @@ import QuillCursors from 'quill-cursors';
 
 import 'quill/dist/quill.snow.css';
 
-Quill.register('modules/cursors', QuillCursors);
+if (!Quill.imports['modules/cursors']) {
+  Quill.register('modules/cursors', QuillCursors);
+}
 
 const USER_COLORS = [
   '#009e84', '#e30044', '#00e366', '#d4e300', 
   '#79009e', '#00bde3', '#ff5722', '#f224cc'
 ];
 
-
 const Editor = ({ room, userName, onLeave }) => {
   const editorRef = useRef(null);
-  const toolbarRef = useRef(null);
   const [users, setUsers] = useState([]);
-
+  const [myAssignedColor, setMyAssignedColor] = useState('#6366f1');
+  const [docSize, setDocSize] = useState('A4'); // Added: Local state for current size
+  
+  const yCommentsRef = useRef(null);
+  const yDocStateRef = useRef(null); // Added: Ref for shared document settings
 
   useEffect(() => {
-    console.log("Connecting to peers");
     const ydoc = new Y.Doc();
     const provider = new WebrtcProvider(room, ydoc, {
       signaling: ['wss://y-webrtc-signalling-server-qd66.onrender.com'] 
     });
+
+    yCommentsRef.current = ydoc.getArray('comments');
+    
+    // Added: Initialize shared map for document settings
+    yDocStateRef.current = ydoc.getMap('settings');
 
     const quill = new Quill(editorRef.current, {
       modules: {
@@ -43,19 +51,32 @@ const Editor = ({ room, userName, onLeave }) => {
       },
       theme: 'snow'
     });
+    
     const persistence = new IndexeddbPersistence(room, ydoc);
-
-
     const ytext = ydoc.getText('quill');
     const binding = new QuillBinding(ytext, quill, provider.awareness);
 
     const colorIndex = provider.awareness.clientID % USER_COLORS.length;
     const myColor = USER_COLORS[colorIndex];
-    
+    setMyAssignedColor(myColor);
+
     provider.awareness.setLocalStateField('user', {
       name: userName,
       color: myColor
     });
+
+    // Added: Synchronize Document Size from the room
+    const handleSettingsChange = () => {
+      const remoteSize = yDocStateRef.current.get('docSize');
+      if (remoteSize) setDocSize(remoteSize);
+    };
+    
+    yDocStateRef.current.observe(handleSettingsChange);
+    
+    // Check for an existing size upon joining
+    if (yDocStateRef.current.get('docSize')) {
+        setDocSize(yDocStateRef.current.get('docSize'));
+    }
 
     const updateUsers = () => {
       const states = provider.awareness.getStates();
@@ -66,35 +87,48 @@ const Editor = ({ room, userName, onLeave }) => {
       setUsers(userList);
     };
 
-    persistence.on('synced', () => {
-      console.log('Content loaded from local database');
-    });
-
     provider.awareness.on('change', updateUsers);
     updateUsers();
 
     return () => {
       persistence.destroy();
       provider.awareness.off('change', updateUsers);
+      yDocStateRef.current.unobserve(handleSettingsChange); // Added
       ydoc.destroy();
       provider.destroy();
     };
   }, [room, userName]);
 
+  // Added: Function to push a size change to the whole room
+  const handleSizeChange = (newSize) => {
+    if (yDocStateRef.current) {
+        yDocStateRef.current.set('docSize', newSize);
+    }
+  };
+
   return (
-    <>
-      <Navbar room={room} onLeave={onLeave}/>
-      <div className="main-content">
+    <div className="editor-root">
+      <Navbar 
+        room={room} 
+        onLeave={onLeave} 
+        currentSize={docSize} 
+        onSizeChange={handleSizeChange} 
+      />
+      <main className="main-content">
         <UserSidebar users={users} />
-        {/* <div className="editor-container"> */}
-            <div className="quill-wrapper">
+        <div className="editor-center-column">
+            {/* Added: Dynamic class based on docSize state */}
+            <div className={`quill-wrapper size-${docSize.toLowerCase()}`}>
               <div ref={editorRef}></div>
             </div>
-        {/* </div> */}
-        <CommentBox />
-
-      </div>
-    </>
+        </div>
+        <CommentBox 
+          currentUser={userName} 
+          userColor={myAssignedColor} 
+          sharedComments={yCommentsRef.current} 
+        />
+      </main>
+    </div>
   );
 };
 
