@@ -1,4 +1,4 @@
-# Wow this works :sob:
+# P2P Collaborative Editor:
 
 ## 1. Start the signalling server
 ```bash
