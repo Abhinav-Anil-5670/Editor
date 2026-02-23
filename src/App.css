@@ -1,11 +1,10 @@
-/* SaaS Color Variables */
 :root {
   --bg-app: #f9fafb;
   --bg-paper: #ffffff;
   --border-subtle: #e5e7eb;
   --text-main: #111827;
   --text-muted: #6b7280;
-  --accent: #6366f1;
+  --accent: #c00060;
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
@@ -13,28 +12,26 @@
 html, body {
   margin: 0;
   padding: 0;
-  width: 100%;
+  width: 100%;  
   height: 100%;
   background-color: var(--bg-app);
   font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
   color: var(--text-main);
 }
 
-/* The Main 3-Column Grid Layout */
-/* --- Global Grid Layout --- */
-.main-content {
-  display: grid;
-  /* Use 'minmax' to prevent sidebars from crushing, but allow 1fr to shrink */
-  grid-template-columns: minmax(180px, 220px) 1fr minmax(300px, 380px);
-  gap: 2rem; /* Using rem for zoom-friendly spacing */
-  padding: 2rem;
-  max-width: 100%; /* Ensure it never overflows the screen */
-  margin: 0 auto;
-  align-items: start;
-  min-height: calc(100vh - 64px);
-  box-sizing: border-box;
+.main-content{
+  display: flex;
+  flex-direction: row;
+  padding-top: 2em;
 }
 
+.editor-center-column{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin-left: 15vw;
+  margin-right: 23vw;
+}
 /* --- Expanded Quill Editor --- */
 .quill-wrapper {
   background-color: var(--bg-paper);
@@ -46,25 +43,29 @@ html, body {
   overflow: hidden; 
   display: flex;
   flex-direction: column;
-  /* Added: Smooth transition when resizing the document */
   transition: max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --paper-height: 1000px;
 }
 
 /* NEW: Dynamic Size Variants */
 .size-a4 {
   max-width: 850px;
+  --paper-height: 1000px;
 }
 
 .size-a3 {
   max-width: 1100px;
+  --paper-height: 1500px;
 }
 
 .size-a5 {
   max-width: 600px;
+  --paper-height: 800px;
 }
 
 .size-wide {
   max-width: 95%;
+  --paper-height: 80vh;
 }
 
 .quill-wrapper:hover {
@@ -89,9 +90,7 @@ html, body {
   word-wrap: break-word;      /* Breaks long words if necessary */
   overflow-x: hidden;         /* Ensures no horizontal scrollbar appears */
   overflow-y: auto;           /* Allows vertical scrolling for long docs */
-  
-  /* Standard paper height logic */
-  min-height: 1000px;
+  min-height: var(--paper-height) !important;
 }
 
 .ql-toolbar.ql-snow {
@@ -108,15 +107,6 @@ html, body {
 }
 
 
-/* Quill Toolbar Customization */
-
-
-/* Editor Container */
-
-
-
-
-/* Collaborative Cursors Styling */
 .ql-remote-cursor {
   transition: all 0.1s ease;
 }
@@ -160,7 +150,7 @@ html, body {
   }
   
   .quill-wrapper {
-    order: 1; /* Keep editor at top */
+    order: 1;
   }
   
   .comment-container {
@@ -170,6 +160,6 @@ html, body {
 
 @media (max-width: 600px) {
   .ql-editor {
-    padding: 20px !important; /* Reduce the huge margins on mobile */
+    padding: 20px !important;
   }
 }

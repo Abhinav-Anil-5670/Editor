@@ -117,7 +117,6 @@ const Editor = ({ room, userName, onLeave }) => {
       <main className="main-content">
         <UserSidebar users={users} />
         <div className="editor-center-column">
-            {/* Added: Dynamic class based on docSize state */}
             <div className={`quill-wrapper size-${docSize.toLowerCase()}`}>
               <div ref={editorRef}></div>
             </div>

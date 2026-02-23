@@ -34,7 +34,7 @@
 }
 
 .roomName {
-  color: #111827; /* Near black */
+  color: var(--accent);
   font-weight: 600;
   background: #f3f4f6;
   padding: 4px 10px;

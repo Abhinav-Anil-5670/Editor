@@ -4,6 +4,7 @@
   height: auto;
   min-height: 80px;
   max-height: 70vh; /* Limits growth to 70% of screen height */
+  max-width: 12vw;
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 20px;
@@ -12,6 +13,8 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  left: 1.5em;
+  position: fixed;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 }
@@ -24,7 +27,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-shrink: 0; /* Prevents header from squashing */
+  flex-shrink: 0;
 }
 
 .sidebar-title {
@@ -39,11 +42,10 @@
 .user-count {
   font-size: 11px;
   font-weight: 600;
-  color: #6b7280;
-  background: #ffffff;
+  color: #ffffff;
+  background: var(--accent);
   padding: 2px 8px;
   border-radius: 20px;
-  border: 1px solid #e5e7eb;
 }
 
 /* User List Section */
