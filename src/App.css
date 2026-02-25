@@ -116,6 +116,23 @@ html, body {
   width: 2px !important;
 }
 
+.ql-comment::after {
+  content: '💬';
+  font-size: 14px;
+}
+
+/* 2. Highlight the commented text */
+.comment-highlight {
+  background-color: rgba(255, 255, 0, 0.4);
+  border-bottom: 2px solid orange;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.comment-highlight:hover {
+  background-color: rgba(255, 255, 0, 0.7);
+}
+
 /* Tablet & Smaller Laptops (Hide Right Sidebar or Stack) */
 @media (max-width: 1100px) {
   .main-content {
