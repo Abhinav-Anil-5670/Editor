@@ -1,5 +1,5 @@
 :root {
-  --bg-app: #f9fafb;
+  --bg-app: #f1f1f1;
   --bg-paper: #ffffff;
   --border-subtle: #e5e7eb;
   --text-main: #111827;
@@ -7,10 +7,10 @@
   --accent: #c00060;
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --comment-icon: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLW1lc3NhZ2UtY2lyY2xlLW1vcmUtaWNvbiBsdWNpZGUtbWVzc2FnZS1jaXJjbGUtbW9yZSI+PHBhdGggZD0iTTIuOTkyIDE2LjM0MmEyIDIgMCAwIDEgLjA5NCAxLjE2N2wtMS4wNjUgMy4yOWExIDEgMCAwIDAgMS4yMzYgMS4xNjhsMy40MTMtLjk5OGEyIDIgMCAwIDEgMS4wOTkuMDkyIDEwIDEwIDAgMSAwLTQuNzc3LTQuNzE5Ii8+PHBhdGggZD0iTTggMTJoLjAxIi8+PHBhdGggZD0iTTEyIDEyaC4wMSIvPjxwYXRoIGQ9Ik0xNiAxMmguMDEiLz48L3N2Zz4=');
 }
 
 html, body {
-  
   margin: 0;
   padding: 0;
   width: 100%;  
@@ -117,8 +117,15 @@ html, body {
 }
 
 .ql-comment::after {
-  content: '💬';
+  content: '';
   font-size: 14px;
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  background-image: var(--comment-icon);
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-left: 5px;
 }
 
 /* 2. Highlight the commented text */

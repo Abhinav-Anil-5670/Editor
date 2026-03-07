@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Editor from './components/Editor'
+import MainEditor from './components/MainEditor'
 import JoinPage from './components/JoinPage'
 import './App.css'
 
@@ -17,7 +17,7 @@ function App() {
       {!room ? (
         <JoinPage onJoin={handleJoin} />
       ) : (
-        <Editor room={room} userName={userName} onLeave={() => setRoom(null)} />
+        <MainEditor room={room} userName={userName} onLeave={() => setRoom(null)} />
       )}
     </>
   )

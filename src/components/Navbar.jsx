@@ -1,8 +1,20 @@
 import React from 'react';
-import { LogOut, Hash, Maximize } from 'lucide-react';
+import { LogOut, Hash, Maximize, Layout, Text, CodeXml } from 'lucide-react'; 
 import './Navbar.css';
 
-const Navbar = ({ room, onLeave, currentSize, onSizeChange }) => {
+const modeOptions = [
+  { label: 'Text Editor', icon: Text, value: 'quill' },
+  { label: 'Code Editor', icon: CodeXml, value: 'monaco' }
+];
+
+const iconMap = {
+  quill: Text,
+  monaco: CodeXml
+};
+const Navbar = ({ room, onLeave, currentSize, onSizeChange, currentMode, onModeChange }) => {
+  
+  const ModeIcon = iconMap[currentMode] || Layout;
+
   return (
     <nav className="navbar-container">
       <div className="roomInfo">
@@ -11,10 +23,25 @@ const Navbar = ({ room, onLeave, currentSize, onSizeChange }) => {
           <span>Room:</span>
           <strong className="roomName">{room}</strong>
         </span>
+
+        {/* New Mode Dropdown - Placed next to Room Name */}
+        <div className="size-selector-wrapper mode-selector">
+          <ModeIcon size={14} className="selector-icon" />
+          <select 
+            value={currentMode} 
+            onChange={(e) => onModeChange(e.target.value)}
+            className="size-select"
+          >
+            {modeOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div className="actions">
-        {/* New Size Dropdown */}
         <div className="size-selector-wrapper">
           <Maximize size={14} className="selector-icon" />
           <select 
