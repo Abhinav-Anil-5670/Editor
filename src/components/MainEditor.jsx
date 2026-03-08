@@ -85,7 +85,7 @@ const MainEditor = ({ room, userName, onLeave }) => {
             {editorMode === 'quill' ? (
               <TextEditor ydoc={ydoc} provider={provider} userName={userName} />
             ) : (
-              <CodeEditor />
+              <CodeEditor ydoc={ydoc} provider={provider} userName={userName} />
             )}
           </div>
         </div>

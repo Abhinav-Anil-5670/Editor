@@ -33,7 +33,7 @@ html, body {
   margin-left: 15vw;
   margin-right: 23vw;
 }
-/* --- Expanded Quill Editor --- */
+
 .quill-wrapper {
   background-color: var(--bg-paper);
   width: 100%;
@@ -46,6 +46,15 @@ html, body {
   flex-direction: column;
   transition: max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   --paper-height: 1000px;
+}
+
+.monaco-wrapper {
+  margin: 0;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  height: 700px;
+  min-width: 1050px;
 }
 
 /* NEW: Dynamic Size Variants */

@@ -61,17 +61,10 @@ const TextEditor = ({ ydoc, provider, userName }) => {
       }
     };
     window.addEventListener('comment-clicked', handleCommentClick);
-
+    
     return () => {
       binding.destroy();
-      const container = editorRef.current;
-      if (container) {
-        const parent = container.closest('.quill-wrapper');
-        const toolbar = parent?.querySelector('.ql-toolbar');
-        if (toolbar) {
-          toolbar.remove();
-        }
-      }
+      [...document.getElementsByClassName('ql-toolbar')].map(el => el.remove());
       window.removeEventListener('comment-clicked', handleCommentClick);
     };
   }, [ydoc, provider]);
