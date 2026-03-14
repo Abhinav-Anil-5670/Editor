@@ -20,7 +20,6 @@ const MainEditor = ({ room, userName, onLeave }) => {
   const [editorMode, setEditorMode] = useState('quill');
   const [myAssignedColor, setMyAssignedColor] = useState('#6366f1');
 
-  // Yjs instances - this is shared between all the editors.
   const ydoc = useMemo(() => new Y.Doc(), []);
   const [provider, setProvider] = useState(null);
 
@@ -30,7 +29,6 @@ const MainEditor = ({ room, userName, onLeave }) => {
     });
     const persistence = new IndexeddbPersistence(room, ydoc);
     
-    // Awareness / Users logic
     const colorIndex = p.awareness.clientID % USER_COLORS.length;
     const myColor = USER_COLORS[colorIndex];
     setMyAssignedColor(myColor);
@@ -46,12 +44,15 @@ const MainEditor = ({ room, userName, onLeave }) => {
     p.awareness.on('change', updateUsers);
     setProvider(p);
 
-    // Sync Settings (Size and Mode)
     const ySettings = ydoc.getMap('settings');
     const handleSettingsChange = () => {
       if (ySettings.get('docSize')) setDocSize(ySettings.get('docSize'));
       if (ySettings.get('editorMode')) setEditorMode(ySettings.get('editorMode'));
     };
+    
+    // Set default language if not exists
+    if (!ySettings.get('codeLanguage')) ySettings.set('codeLanguage', 'java');
+
     ySettings.observe(handleSettingsChange);
     handleSettingsChange();
 
@@ -83,9 +84,9 @@ const MainEditor = ({ room, userName, onLeave }) => {
         <div className="editor-center-column">
           <div className={`${editorMode}-wrapper size-${docSize.toLowerCase()}`}>
             {editorMode === 'quill' ? (
-              <TextEditor ydoc={ydoc} provider={provider} userName={userName} />
+              provider && <TextEditor ydoc={ydoc} provider={provider} userName={userName} />
             ) : (
-              <CodeEditor ydoc={ydoc} provider={provider} userName={userName} />
+              provider && <CodeEditor ydoc={ydoc} provider={provider} userName={userName} />
             )}
           </div>
         </div>
